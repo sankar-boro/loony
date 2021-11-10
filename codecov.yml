@@ -1,0 +1,6 @@
+ignore: # ignore codecoverage on following paths
+  - "**/tests"
+  - "**/benches"
+  - "**/examples"
+  - "loony-macros"
+  - "loony-rt-macros"

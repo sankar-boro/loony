@@ -1,0 +1,29 @@
+[package]
+name = "loony-router"
+version = "0.5.1"
+authors = ["loony contributors <team@loony.rs>"]
+description = "Path router"
+keywords = ["loony"]
+repository = "https://github.com/loony-rs/loony.git"
+documentation = "https://docs.rs/loony-router/"
+license = "MIT"
+edition = "2018"
+
+[lib]
+name = "loony_router"
+path = "src/lib.rs"
+
+[features]
+default = ["http"]
+
+[dependencies]
+loony-bytes = { git="https://github.com/sankar-boro/loony" }
+
+serde = "1.0"
+log = "0.4"
+http = { version = "0.2", optional = true }
+regex = { version = "1.5.4", default-features = false, features = ["std"] }
+
+[dev-dependencies]
+http = "0.2"
+serde_derive = "1.0"

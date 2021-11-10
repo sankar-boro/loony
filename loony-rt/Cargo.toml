@@ -1,0 +1,22 @@
+[package]
+name = "loony-rt"
+version = "0.3.1"
+authors = ["loony contributors <team@loony.rs>"]
+description = "loony runtime"
+keywords = ["network", "framework", "async", "futures"]
+homepage = "https://loony.rs"
+repository = "https://github.com/loony-rs/loony.git"
+documentation = "https://docs.rs/loony-rt/"
+categories = ["network-programming", "asynchronous"]
+license = "MIT"
+edition = "2018"
+
+[lib]
+name = "loony_rt"
+path = "src/lib.rs"
+
+[dependencies]
+loony-util = { git="https://github.com/sankar-boro/loony" }
+
+pin-project-lite = "0.2"
+tokio = { version = "1", default-features = false, features = ["rt", "net", "time", "signal", "sync"] }

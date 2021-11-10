@@ -1,0 +1,121 @@
+# Changes
+
+## [0.5.1] - 2021-08-23
+
+* Fix: segments could be lost in case of immediate match
+
+## [0.5.0] - 2021-06-27
+
+* Use loony-bytes instead of bytestring
+
+## [0.4.4] - 2021-06-14
+
+* Fix search order for normal and prefix paths
+
+## [0.4.3] - 2021-04-03
+
+* Disable some of regex features
+
+## [0.4.2] - 2021-03-16
+
+* Use `IntoPattern` for prefix resources
+
+## [0.4.1] - 2021-02-26
+
+* Fix: partial matches keep garbage in segments
+
+## [0.4.0] - 2021-02-23
+
+* Upgrade to bytestring 1.0
+
+## [0.3.8] - 2020-10-28
+
+* Router struct implements Clone trait
+
+## [0.3.7] - 2020-09-21
+
+* Fix hex conversion helper
+
+## [0.3.6] - 2020-09-11
+
+* Allow nested prefixed resources
+
+## [0.3.5] - 2020-05-09
+
+* Handle non-prefix and prefix resources combinations
+
+## [0.3.4] - 2020-04-17
+
+* Add ResourcePath impl for &T where T: ResourcePath
+
+## [0.3.3] - 2020-04-11
+
+* Fix `/` prefix match
+
+## [0.3.2] - 2020-04-06
+
+* Fix IdxSegment item for paths with no root
+
+## [0.3.1] - 2020-04-06
+
+* Fix url quoter
+
+* Add non-allocating path item
+
+## [0.3.0] - 2020-03-31
+
+* Case insensitive routing
+
+* Use prefix tree for underling data representation
+
+## [0.2.4] - 2019-12-31
+
+* Add `ResourceDef::resource_path_named()` path generation method
+
+## [0.2.3] - 2019-12-25
+
+* Add impl `IntoPattern` for `&String`
+
+## [0.2.2] - 2019-12-25
+
+* Use `IntoPattern` for `RouterBuilder::path()`
+
+## [0.2.1] - 2019-12-25
+
+* Add `IntoPattern` trait
+
+* Add multi-pattern resources
+
+## [0.2.0] - 2019-12-07
+
+* Update http to 0.2
+
+* Update regex to 1.3
+
+* Use bytestring instead of string
+
+## [0.1.5] - 2019-05-15
+
+* Remove debug prints
+
+## [0.1.4] - 2019-05-15
+
+* Fix checked resource match
+
+## [0.1.3] - 2019-04-22
+
+* Added support for `remainder match` (i.e "/path/{tail}*")
+
+## [0.1.2] - 2019-04-07
+
+* Export `Quoter` type
+
+* Allow to reset `Path` instance
+
+## [0.1.1] - 2019-04-03
+
+* Get dynamic segment by name instead of iterator.
+
+## [0.1.0] - 2019-03-09
+
+* Initial release

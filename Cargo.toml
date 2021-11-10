@@ -1,0 +1,21 @@
+[workspace]
+members = [
+  "loony",
+  "loony-bytes",
+  "loony-codec",
+  "loony-router",
+  "loony-rt",
+  "loony-service",
+  "loony-macros",
+  "loony-util",
+]
+
+[patch.crates-io]
+loony = { path = "loony" }
+loony-bytes = { path = "loony-bytes" }
+loony-codec = { path = "loony-codec" }
+loony-router = { path = "loony-router" }
+loony-rt = { path = "loony-rt" }
+loony-service = { path = "loony-service" }
+loony-macros = { path = "loony-macros" }
+loony-util = { path = "loony-util" }

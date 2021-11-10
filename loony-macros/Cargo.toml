@@ -1,0 +1,20 @@
+[package]
+name = "loony-macros"
+version = "0.1.3"
+description = "loony proc macros"
+readme = "README.md"
+authors = ["loony contributors <team@loony.rs>"]
+license = "MIT"
+edition = "2018"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = "^1"
+syn = { version = "^1", features = ["full", "parsing"] }
+proc-macro2 = "^1"
+
+[dev-dependencies]
+loony = { git="https://github.com/sankar-boro/loony" }
+futures = "0.3.13"

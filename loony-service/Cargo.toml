@@ -1,0 +1,24 @@
+[package]
+name = "loony-service"
+version = "0.2.1"
+authors = ["loony contributors <team@loony.rs>"]
+description = "loony service"
+keywords = ["network", "framework", "async", "futures"]
+homepage = "https://loony.rs"
+repository = "https://github.com/loony-rs/loony.git"
+documentation = "https://docs.rs/loony-service/"
+categories = ["network-programming", "asynchronous"]
+license = "MIT"
+edition = "2018"
+
+[lib]
+name = "loony_service"
+path = "src/lib.rs"
+
+[dependencies]
+loony-util = { git="https://github.com/sankar-boro/loony" }
+
+pin-project-lite = "0.2.6"
+
+[dev-dependencies]
+loony = { git="https://github.com/sankar-boro/loony" }
