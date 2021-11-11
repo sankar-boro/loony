@@ -3,6 +3,7 @@
 
 use std::future::Future;
 use std::rc::Rc;
+use std::cell::RefCell;
 use std::task::{self, Context, Poll};
 
 mod and_then;
@@ -271,6 +272,29 @@ where
 
     fn call(&self, request: Self::Request) -> S::Future {
         (**self).call(request)
+    }
+}
+
+impl<S> Service for RefCell<S>
+where
+    S: Service,
+{
+    type Request = S::Request;
+    type Response = S::Response;
+    type Error = S::Error;
+    type Future = S::Future;
+
+    fn poll_ready(&self, ctx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        self.borrow().poll_ready(ctx)
+    }
+
+    #[inline]
+    fn poll_shutdown(&self, cx: &mut Context<'_>, is_error: bool) -> Poll<()> {
+        self.borrow().poll_shutdown(cx, is_error)
+    }
+
+    fn call(&self, request: Self::Request) -> S::Future {
+        self.borrow().call(request)
     }
 }
 
