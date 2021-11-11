@@ -37,7 +37,7 @@ pub use self::service::HttpService;
 
 // re-exports
 pub use http::uri::{self, Uri};
-pub use http::{Method, StatusCode, Version};
+pub use http::{Method, StatusCode, Version, HeaderValue};
 
 /// Http protocol
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
