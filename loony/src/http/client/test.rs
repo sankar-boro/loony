@@ -1,8 +1,8 @@
 //! Test helpers for loony http client to use during testing.
 use std::convert::TryFrom;
 
-#[cfg(feature = "cookie")]
-use coo_kie::{Cookie, CookieJar};
+#[cfg(feature = "cookies")]
+use cookie::{Cookie, CookieJar};
 
 use crate::http::error::HttpError;
 use crate::http::header::{HeaderName, HeaderValue};
@@ -15,7 +15,7 @@ use super::ClientResponse;
 pub struct TestResponse {
     head: ResponseHead,
     payload: Option<Payload>,
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     cookies: CookieJar,
 }
 
@@ -24,7 +24,7 @@ impl Default for TestResponse {
         TestResponse {
             head: ResponseHead::new(StatusCode::OK),
             payload: None,
-            #[cfg(feature = "cookie")]
+            #[cfg(feature = "cookies")]
             cookies: CookieJar::new(),
         }
     }
@@ -63,7 +63,7 @@ impl TestResponse {
         panic!("Cannot create header");
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     /// Set cookie for this response
     pub fn cookie(mut self, cookie: Cookie<'_>) -> Self {
         self.cookies.add(cookie.into_owned());
@@ -83,7 +83,7 @@ impl TestResponse {
         #[allow(unused_mut)]
         let mut head = self.head;
 
-        #[cfg(feature = "cookie")]
+        #[cfg(feature = "cookies")]
         {
             use percent_encoding::percent_encode;
             use std::fmt::Write as FmtWrite;
@@ -122,12 +122,12 @@ mod tests {
     #[test]
     fn test_basics() {
         let res = {
-            #[cfg(feature = "cookie")]
+            #[cfg(feature = "cookies")]
             {
                 TestResponse::default()
                     .version(Version::HTTP_2)
                     .header(header::DATE, "data")
-                    .cookie(coo_kie::Cookie::build("name", "value").finish())
+                    .cookie(cookie::Cookie::build("name", "value").finish())
                     .finish()
             }
             #[cfg(not(feature = "cookie"))]
@@ -138,7 +138,7 @@ mod tests {
                     .finish()
             }
         };
-        #[cfg(feature = "cookie")]
+        #[cfg(feature = "cookies")]
         assert!(res.headers().contains_key(header::SET_COOKIE));
         assert!(res.headers().contains_key(header::DATE));
         assert_eq!(res.version(), Version::HTTP_2);

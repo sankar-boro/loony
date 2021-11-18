@@ -1,5 +1,6 @@
 use loony::http;
 use loony::web::{self, middleware, App, HttpRequest, HttpResponse, HttpServer};
+use loony_session::{CookieSession};
 
 #[web::get("/resource1/{name}/index.html")]
 async fn index(req: HttpRequest, name: web::types::Path<String>) -> String {
@@ -21,9 +22,10 @@ async fn no_params() -> &'static str {
 async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "loony=trace");
     env_logger::init();
-
+    
     HttpServer::new(|| {
         App::new()
+            .wrap(CookieSession::signed(&[0; 32]).secure(false))
             .wrap(middleware::Logger::default())
             .service((index, no_params))
             .service(

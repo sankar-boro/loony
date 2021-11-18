@@ -4,7 +4,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
 use brotli2::write::BrotliEncoder;
-use coo_kie::Cookie;
+use cookie::Cookie;
 use flate2::{read::GzDecoder, write::GzEncoder, write::ZlibEncoder, Compression};
 use futures::{future::ok, stream::once};
 use rand::Rng;

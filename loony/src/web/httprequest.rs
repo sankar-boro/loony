@@ -349,14 +349,14 @@ mod tests {
         assert_eq!(req.method(), &Method::GET);
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     #[test]
     fn test_no_request_cookies() {
         let req = TestRequest::default().to_http_request();
         assert!(req.cookies().unwrap().is_empty());
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     #[test]
     fn test_request_cookies() {
         let req = TestRequest::default()

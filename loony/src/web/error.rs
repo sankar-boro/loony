@@ -730,10 +730,10 @@ mod tests {
         );
         assert_eq!(resp.status(), StatusCode::INTERNAL_SERVER_ERROR);
 
-        #[cfg(feature = "cookie")]
+        #[cfg(feature = "cookies")]
         {
             let resp: HttpResponse = WebResponseError::<DefaultError>::error_response(
-                &coo_kie::ParseError::EmptyName,
+                &cookie::ParseError::EmptyName,
                 &req,
             );
             assert_eq!(resp.status(), StatusCode::BAD_REQUEST);

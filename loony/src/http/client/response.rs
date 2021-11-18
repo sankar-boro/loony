@@ -4,8 +4,8 @@ use std::{fmt, future::Future, marker::PhantomData, mem, pin::Pin};
 
 use serde::de::DeserializeOwned;
 
-#[cfg(feature = "cookie")]
-use coo_kie::{Cookie, ParseError as CookieParseError};
+#[cfg(feature = "cookies")]
+use cookie::{Cookie, ParseError as CookieParseError};
 
 use crate::http::error::PayloadError;
 use crate::http::header::{AsName, HeaderValue, CONTENT_LENGTH};
@@ -35,7 +35,7 @@ impl HttpMessage for ClientResponse {
         self.head.extensions_mut()
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     /// Load request cookies.
     fn cookies(&self) -> Result<Ref<'_, Vec<Cookie<'static>>>, CookieParseError> {
         use crate::http::header::SET_COOKIE;

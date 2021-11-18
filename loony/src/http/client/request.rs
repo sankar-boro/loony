@@ -1,7 +1,7 @@
 use std::{convert::TryFrom, error::Error, fmt, net, rc::Rc};
 
-#[cfg(feature = "cookie")]
-use coo_kie::{Cookie, CookieJar};
+#[cfg(feature = "cookies")]
+use cookie::{Cookie, CookieJar};
 use serde::Serialize;
 
 use crate::http::body::Body;
@@ -48,7 +48,7 @@ pub struct ClientRequest {
     pub(crate) head: RequestHead,
     err: Option<HttpError>,
     addr: Option<net::SocketAddr>,
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     cookies: Option<CookieJar>,
     response_decompress: bool,
     timeout: Millis,
@@ -67,7 +67,7 @@ impl ClientRequest {
             head: RequestHead::default(),
             err: None,
             addr: None,
-            #[cfg(feature = "cookie")]
+            #[cfg(feature = "cookies")]
             cookies: None,
             timeout: Millis::ZERO,
             response_decompress: true,
@@ -268,11 +268,11 @@ impl ClientRequest {
         self.header(header::AUTHORIZATION, format!("Bearer {}", token))
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     /// Set a cookie
     ///
     /// ```rust
-    /// use coo_kie as cookie;
+    /// use cookie as cookie;
     /// use loony::http::client::Client;
     ///
     /// #[loony::main]
@@ -494,7 +494,7 @@ impl ClientRequest {
         }
 
         // set cookies
-        #[cfg(feature = "cookie")]
+        #[cfg(feature = "cookies")]
         {
             use percent_encoding::percent_encode;
             use std::fmt::Write as FmtWrite;

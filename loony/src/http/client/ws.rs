@@ -1,8 +1,8 @@
 //! Websockets client
 use std::{convert::TryFrom, fmt, net::SocketAddr, rc::Rc, str};
 
-#[cfg(feature = "cookie")]
-use coo_kie::{Cookie, CookieJar};
+#[cfg(feature = "cookies")]
+use cookie::{Cookie, CookieJar};
 use nanorand::{Rng, WyRand};
 
 use crate::codec::{AsyncRead, AsyncWrite, Framed};
@@ -30,7 +30,7 @@ pub struct WsRequest {
     addr: Option<SocketAddr>,
     max_size: usize,
     server_mode: bool,
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     cookies: Option<CookieJar>,
     config: Rc<ClientConfig>,
 }
@@ -62,7 +62,7 @@ impl WsRequest {
             protocols: None,
             max_size: 65_536,
             server_mode: false,
-            #[cfg(feature = "cookie")]
+            #[cfg(feature = "cookies")]
             cookies: None,
         }
     }
@@ -90,7 +90,7 @@ impl WsRequest {
         self
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     /// Set a cookie
     pub fn cookie(mut self, cookie: Cookie<'_>) -> Self {
         if self.cookies.is_none() {
@@ -245,7 +245,7 @@ impl WsRequest {
             );
         }
 
-        #[cfg(feature = "cookie")]
+        #[cfg(feature = "cookies")]
         {
             use percent_encoding::percent_encode;
             use std::fmt::Write as FmtWrite;
@@ -567,7 +567,7 @@ mod tests {
         let _ = req.connect();
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     #[crate::rt_test]
     async fn basics() {
         let req = Client::new()

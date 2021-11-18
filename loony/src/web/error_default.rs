@@ -209,9 +209,9 @@ impl WebResponseError<DefaultError> for http::error::PayloadError {
     }
 }
 
-#[cfg(feature = "cookie")]
+#[cfg(feature = "cookies")]
 /// Return `BadRequest` for `cookie::ParseError`
-impl WebResponseError<DefaultError> for coo_kie::ParseError {
+impl WebResponseError<DefaultError> for cookie::ParseError {
     fn status_code(&self) -> StatusCode {
         StatusCode::BAD_REQUEST
     }

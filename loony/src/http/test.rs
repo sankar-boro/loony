@@ -1,8 +1,8 @@
 //! Test helpers to use during testing.
 use std::{convert::TryFrom, io, net, str::FromStr, sync::mpsc, thread};
 
-#[cfg(feature = "cookie")]
-use coo_kie::{Cookie, CookieJar};
+#[cfg(feature = "cookies")]
+use cookie::{Cookie, CookieJar};
 
 use crate::codec::{AsyncRead, AsyncWrite, Framed};
 use crate::rt::{net::TcpStream, System};
@@ -45,7 +45,7 @@ struct Inner {
     method: Method,
     uri: Uri,
     headers: HeaderMap,
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     cookies: CookieJar,
     payload: Option<Payload>,
 }
@@ -57,7 +57,7 @@ impl Default for TestRequest {
             uri: Uri::from_str("/").unwrap(),
             version: Version::HTTP_11,
             headers: HeaderMap::new(),
-            #[cfg(feature = "cookie")]
+            #[cfg(feature = "cookies")]
             cookies: CookieJar::new(),
             payload: None,
         }))
@@ -114,7 +114,7 @@ impl TestRequest {
         panic!("Cannot create header");
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     /// Set cookie for this request
     pub fn cookie<'a>(&mut self, cookie: Cookie<'a>) -> &mut Self {
         parts(&mut self.0).cookies.add(cookie.into_owned());
@@ -149,7 +149,7 @@ impl TestRequest {
         head.version = inner.version;
         head.headers = inner.headers;
 
-        #[cfg(feature = "cookie")]
+        #[cfg(feature = "cookies")]
         {
             use percent_encoding::percent_encode;
             use std::fmt::Write as FmtWrite;

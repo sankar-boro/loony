@@ -4,8 +4,8 @@ use std::{
     thread,
 };
 
-#[cfg(feature = "cookie")]
-use coo_kie::Cookie;
+#[cfg(feature = "cookies")]
+use cookie::Cookie;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 
@@ -403,7 +403,7 @@ impl TestRequest {
         self
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     /// Set cookie for this request
     pub fn cookie(mut self, cookie: Cookie<'_>) -> Self {
         self.req.cookie(cookie);
@@ -1231,12 +1231,12 @@ mod tests {
         assert!(response.status().is_success());
     }
 
-    #[cfg(feature = "cookie")]
+    #[cfg(feature = "cookies")]
     #[test]
     fn test_response_cookies() {
         let req = TestRequest::default()
             .cookie(
-                coo_kie::Cookie::build("name", "value")
+                cookie::Cookie::build("name", "value")
                     .domain("www.rust-lang.org")
                     .path("/test")
                     .http_only(true)

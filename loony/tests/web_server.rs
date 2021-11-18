@@ -1006,20 +1006,20 @@ async fn test_server_cookies() {
         App::new().service(web::resource("/").to(|| async {
             HttpResponse::Ok()
                 .cookie(
-                    coo_kie::CookieBuilder::new("first", "first_value")
+                    cookie::CookieBuilder::new("first", "first_value")
                         .http_only(true)
                         .finish(),
                 )
-                .cookie(coo_kie::Cookie::new("second", "first_value"))
-                .cookie(coo_kie::Cookie::new("second", "second_value"))
+                .cookie(cookie::Cookie::new("second", "first_value"))
+                .cookie(cookie::Cookie::new("second", "second_value"))
                 .finish()
         }))
     });
 
-    let first_cookie = coo_kie::CookieBuilder::new("first", "first_value")
+    let first_cookie = cookie::CookieBuilder::new("first", "first_value")
         .http_only(true)
         .finish();
-    let second_cookie = coo_kie::Cookie::new("second", "second_value");
+    let second_cookie = cookie::Cookie::new("second", "second_value");
 
     let response = srv.get("/").send().await.unwrap();
     assert!(response.status().is_success());

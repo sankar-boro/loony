@@ -45,6 +45,8 @@ pub mod util;
 #[cfg(feature = "http-framework")]
 pub mod web;
 pub mod ws;
+#[cfg(feature = "cookies")]
+pub use cookie;
 
 pub use self::service::{
     apply_fn, boxed, fn_factory, fn_factory_with_config, fn_service, into_service,
