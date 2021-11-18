@@ -50,7 +50,6 @@ loony-service = { git="https://github.com/sankar-boro/loony" }
 loony-macros = { git="https://github.com/sankar-boro/loony" }
 loony-util = { git="https://github.com/sankar-boro/loony" }
 loony-bytes = { git="https://github.com/sankar-boro/loony" }
-loony-session = { git="https://github.com/sankar-boro/loony-extras" }
 
 base64 = "0.13"
 bitflags = "1.3"

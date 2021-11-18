@@ -1,6 +1,5 @@
 use loony::http;
 use loony::web::{self, middleware, App, HttpRequest, HttpResponse, HttpServer};
-use loony_session::{CookieSession};
 
 #[web::get("/resource1/{name}/index.html")]
 async fn index(req: HttpRequest, name: web::types::Path<String>) -> String {
@@ -25,7 +24,7 @@ async fn main() -> std::io::Result<()> {
     
     HttpServer::new(|| {
         App::new()
-            .wrap(CookieSession::signed(&[0; 32]).secure(false))
+            // .wrap(CookieSession::signed(&[0; 32]).secure(false))
             .wrap(middleware::Logger::default())
             .service((index, no_params))
             .service(
