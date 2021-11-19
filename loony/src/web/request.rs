@@ -1,13 +1,15 @@
 use std::cell::{Ref, RefMut};
 use std::marker::PhantomData;
 use std::rc::Rc;
-use std::{fmt, net};
+use std::{fmt, net, str};
 
 use crate::http::{
     header, HeaderMap, HttpMessage, Method, Payload, RequestHead, Response, Uri, Version,
 };
 use crate::router::{Path, Resource};
 use crate::util::Extensions;
+#[cfg(feature = "cookies")]
+use cookie::{Cookie, ParseError as CookieParseError};
 
 use super::config::AppConfig;
 use super::error::{ErrorRenderer, WebResponseError};
@@ -15,6 +17,9 @@ use super::httprequest::HttpRequest;
 use super::info::ConnectionInfo;
 use super::response::WebResponse;
 use super::rmap::ResourceMap;
+
+#[cfg(feature = "cookies")]
+struct Cookies(Vec<Cookie<'static>>);
 
 /// An service http request
 ///
@@ -230,6 +235,31 @@ impl<Err> WebRequest<Err> {
     #[inline]
     pub fn extensions_mut(&self) -> RefMut<'_, Extensions> {
         self.req.extensions_mut()
+    }
+
+    /// Mutable reference to a the request's cookies
+    /// Load request cookies.
+    #[cfg(feature = "cookies")]
+    #[inline]
+    pub fn cookies(&self) -> Result<Ref<'_, Vec<Cookie<'static>>>, CookieParseError> {
+        use crate::http::header::COOKIE;
+
+        if self.extensions().get::<Cookies>().is_none() {
+            let mut cookies = Vec::new();
+            for hdr in self.headers().get_all(COOKIE) {
+                let s = str::from_utf8(hdr.as_bytes()).map_err(CookieParseError::from)?;
+                for cookie_str in s.split(';').map(|s| s.trim()) {
+                    if !cookie_str.is_empty() {
+                        cookies.push(Cookie::parse_encoded(cookie_str)?.into_owned());
+                    }
+                }
+            }
+            self.extensions_mut().insert(Cookies(cookies));
+        }
+
+        Ok(Ref::map(self.extensions(), |ext| {
+            &ext.get::<Cookies>().unwrap().0
+        }))
     }
 }
 
